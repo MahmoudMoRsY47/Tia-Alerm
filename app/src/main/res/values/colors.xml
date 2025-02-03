@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="colorPrimary">#FD568F</color>
+    <color name="colorPolyLine">#373736</color>
+    <color name="colorPrimaryLight">#FA8BB1</color>
+    <color name="colorPrimaryTrans">#E7B962</color>
+    <color name="colorPrimaryLightTrans">#F7FAFC</color>
+    <color name="colorAccent">#0E4DC8</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorSemiWhite">#CCFAFAFA</color>
+    <color name="colorWhiteTrans">#45FFFFFF</color>
+    <color name="colorBlueLight">#F7FAFC</color>
+    <color name="colorBg">#F7FAFC</color>
+    <color name="colorRed">#EC2F2F</color>
+    <color name="colorYellow">#FFC107</color>
+    <color name="colorBlue">#66013570</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorBlackTransparent">#4D000000</color>
+    <color name="colorBlackTransparentLight">#20000000</color>
+    <color name="trans">#00FFF9F9</color>
+    <color name="colorGrey">#F5F5F5</color>
+    <color name="colorGreen">#00CE3A</color>
+    <color name="colorGreyMid">#989898</color>
+    <color name="colorGreyDark">#1D1D1D</color>
+
+    <color name="screen_bg">#FFFFFF</color>
+    <color name="text_hint">#979797</color>
+    <color name="text_color">#1F2327</color>
+    <color name="text_red">#E50930</color>
+    <color name="grey_light">#F8F8F8</color>
+    <color name="gray_mid">#8D8D8D</color>
+    <color name="grey_dark">#434343</color>
+
+    <color name="icon_color_primary">#0E4DC8</color>
+    <color name="icon_color_accent">#EFEFEF</color>
+    <color name="icon_color_primary_t">#520E4DC8</color>
+    <color name="colorPrimaryDark">#0E4DC8</color>
+    <color name="et_background">#FFFFFF</color>
+    <color name="et_stroke">#F8F8F8</color>
+
+    <color name="line_color">#DBD9D9</color>
+
+    <!-- other -->
+    <color name="wifi_on">#4FD477</color>
+    <color name="wifi_off">#E2DDD0</color>
 </resources>

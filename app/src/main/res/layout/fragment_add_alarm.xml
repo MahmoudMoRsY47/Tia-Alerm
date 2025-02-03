@@ -1,0 +1,80 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_tia"
+            android:layout_width="270dp"
+            android:layout_height="270dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:shapeAppearanceOverlay="@style/img_circle"
+            app:srcCompat="@drawable/tia3" />
+
+        <TimePicker
+        android:id="@+id/timePicker"
+            android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_name_layout"
+            style="@style/layout_input_style"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:hint="@string/alarm_name"
+                android:paddingVertical="14dp"
+                android:textAlignment="viewStart"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_interval_layout"
+            style="@style/layout_input_style"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_interval"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:hint="@string/repeat_interval_hours"
+                android:inputType="numberDecimal"
+                android:paddingVertical="14dp"
+                android:textAlignment="viewStart"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+        android:id="@+id/setAlarmButton"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/add_alarm"
+            android:visibility="gone"
+        android:layout_height="wrap_content"
+            app:cornerRadius="8dp" />
+</LinearLayout>
+</ScrollView>

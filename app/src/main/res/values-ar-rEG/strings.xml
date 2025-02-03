@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tia Alarm</string>
+    <string name="repeat_interval_hours">فترة التكرار (ساعات)</string>
+    <string name="add_alarm">إضافة المنبه</string>
+    <string name="delete">حذف</string>
+    <string name="alarm_name">اسم المنبة</string>
+    <string name="time">"الوقت : "</string>
+    <string name="repeating_every_hours">التكرار كل %1$s ساعة</string>
+    <string name="alarm">منبة: %1$s</string>
+    <string name="time_s_up">حان موعد ال %1$s</string>
+    <string name="tia_mahmoud_morsy">تيا محمود مرسي ❤️</string>
+    <string name="no_alarms_set">مفيش منبهات 😲</string>
+    <string name="alarm_removed">تم حذف المنبة</string>
+    <string name="without_name">بدون إسم</string>
+    <string name="language">English</string>
+    <string name="alarm_set_for_repeating_every_hour">تم ضبط المنبة علي الساعة %1$s:%2$s ويتكرر كل %3$s ساعة</string>
+    <string name="please_you_must_enter_name_of_alarm_and_interval_time">معلش لازم تدخلي اسم المنبة وهيتكرر بعد كل اد اي 😢</string>
+</resources>

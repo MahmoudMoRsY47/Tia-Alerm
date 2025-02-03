@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Tia Alert"
+rootProject.name = "Tia Alarm"
 include(":app")
  

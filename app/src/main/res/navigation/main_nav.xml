@@ -2,20 +2,20 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/splash_nav"
-    app:startDestination="@id/addAlertFragment"
+    app:startDestination="@id/alarmsFragment"
    >
 
     <fragment
-        android:id="@+id/addAlertFragment"
-        android:name="com.example.tiaalert.main.AddAlertFragment" />
+        android:id="@+id/addAlarmFragment"
+        android:name="com.example.tiaalert.main.AddAlarmFragment" />
 
+    <fragment
+        android:id="@+id/alarmsFragment"
+        android:name="com.example.tiaalert.main.AlarmsFragment">
 
-    <!--            actions            -->
-
-<!--    <action-->
-<!--        android:id="@+id/action_splashFragment_to_languageFragment"-->
-<!--        app:destination="@id/languageFragment"-->
-<!--        app:popUpTo="@id/splashFragment"-->
-<!--        app:popUpToInclusive="true" />-->
+        <action
+            android:id="@+id/action_alarmsFragment_to_addAlarmFragment"
+            app:destination="@id/addAlarmFragment" />
+    </fragment>
 
 </navigation>

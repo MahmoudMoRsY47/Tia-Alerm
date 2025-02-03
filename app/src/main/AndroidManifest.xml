@@ -20,7 +20,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TiaAlert"
+        android:localeConfig="@xml/locales_config"
+        android:theme="@style/Theme.base"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
@@ -34,13 +35,14 @@
 
 
         <receiver
-            android:name=".main.AlertReceiver"
+            android:name=".main.background.AlarmReceiver"
             android:exported="false" />
 
         <receiver
-            android:name=".main.StopAlarmReceiver"
+            android:name=".main.background.StopAlarmReceiver"
             android:enabled="true"
             android:exported="false"/>
+
 
     </application>
 

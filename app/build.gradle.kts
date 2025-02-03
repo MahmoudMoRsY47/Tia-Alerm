@@ -1,7 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization) // Add this line
+
 }
+
 
 android {
     namespace = "com.example.tiaalert"
@@ -55,6 +58,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation (libs.androidx.navigation.fragment.ktx)
-    implementation ("androidx.work:work-runtime-ktx:2.10.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation(libs.androidx.work.runtime.ktx)
 
 }
