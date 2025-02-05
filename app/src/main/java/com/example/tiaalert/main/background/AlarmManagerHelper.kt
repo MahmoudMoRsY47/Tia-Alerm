@@ -25,7 +25,7 @@ class AlarmManagerHelper(context: Context) {
         return json.fromJsonArray()
     }
 
-    fun removeAlarm(id: String) {
+    fun removeAlarm(id: Int) {
         val alarms = getAlarms().filterNot { it.id == id }
         prefs.edit().putString("alarms", alarms.toJson()).apply()
 

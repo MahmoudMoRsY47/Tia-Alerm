@@ -7,7 +7,13 @@
 
     <fragment
         android:id="@+id/addAlarmFragment"
-        android:name="com.example.tiaalert.main.AddAlarmFragment" />
+        android:name="com.example.tiaalert.main.AddAlarmFragment">
+
+        <action
+            android:id="@+id/action_addAlarmFragment_to_alarmsFragment"
+            app:destination="@id/alarmsFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/alarmsFragment"
@@ -16,6 +22,11 @@
         <action
             android:id="@+id/action_alarmsFragment_to_addAlarmFragment"
             app:destination="@id/addAlarmFragment" />
+        <argument
+            android:name="alarm"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
 </navigation>

@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.serialization) // Add this line
-
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.androidx.navigation.safeargs) // Use the correct alias
 }
 
 

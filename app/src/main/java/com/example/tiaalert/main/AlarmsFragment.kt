@@ -27,7 +27,19 @@ class AlarmsFragment : Fragment() {
     private lateinit var binding: FragmentAlarmsBinding
     private lateinit var alarmManagerHelper: AlarmManagerHelper
     private val alarmAdapter by lazy {
-        AlarmAdapter { id -> removeAlarm(id) }
+        AlarmAdapter { id ->
+            // Step 1: Cancel the scheduled alarm
+            cancelScheduledAlarm(id)
+
+            // Step 2: Remove the alarm from storage
+            alarmManagerHelper.removeAlarm(id)
+
+            // Step 3: Update the UI
+            updateAlarmList()
+
+            Toast.makeText(requireContext(), getString(R.string.alarm_removed), Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
     override fun onCreateView(
@@ -35,14 +47,6 @@ class AlarmsFragment : Fragment() {
     ): View {
         binding = FragmentAlarmsBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    private fun removeAlarm(id: String) {
-        cancelScheduledAlarm(id)
-        alarmManagerHelper.removeAlarm(id)
-        updateAlarmList()
-        Toast.makeText(requireContext(), getString(R.string.alarm_removed), Toast.LENGTH_SHORT)
-            .show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,7 +73,7 @@ class AlarmsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        updateAlarmList() // Refresh only if needed
+        updateAlarmList() // Refresh the list when the fragment resumes
     }
 
     private fun updateAlarmList() {
@@ -93,16 +97,20 @@ class AlarmsFragment : Fragment() {
         }
     }
 
-
-    private fun cancelScheduledAlarm(id: String) {
+    private fun cancelScheduledAlarm(id: Int) {
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(requireContext(), AlarmReceiver::class.java)
+
+        // Create a PendingIntent with the same request code used when setting the alarm
         val pendingIntent = PendingIntent.getBroadcast(
             requireContext(),
-            id.hashCode(),
+            id, // Ensure this matches the request code used when setting the alarm
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+
+        // Cancel the alarm
         alarmManager.cancel(pendingIntent)
+        pendingIntent.cancel() // Ensure the PendingIntent is also canceled
     }
 }

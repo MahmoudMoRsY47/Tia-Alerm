@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class AlarmAdapter(private val onDelete: (String) -> Unit) :
+class AlarmAdapter(private val onDelete: (Int) -> Unit) :
     ListAdapter<AlarmsModel, AlarmAdapter.AlarmsViewHolder>(AlarmDiffCallback()) {
 
     inner class AlarmsViewHolder(private val binding: ItemAlarmBinding) :

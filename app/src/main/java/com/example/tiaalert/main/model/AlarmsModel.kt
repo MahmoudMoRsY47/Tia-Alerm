@@ -2,12 +2,11 @@ package com.example.tiaalert.main.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.util.UUID
 
 @Serializable
 data class AlarmsModel(
     @SerialName("id")
-    val id: String = UUID.randomUUID().toString(), // Generates a unique ID if not provided
+    val id: Int = 0, // Generates a unique ID if not provided
     @SerialName("hour")
     val hour: Int = 0,
     @SerialName("minute")

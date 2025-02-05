@@ -15,4 +15,5 @@
     <string name="language"> العربية</string>
     <string name="alarm_set_for_repeating_every_hour">Alarm set for %1$s:%2$s repeating every %3$s hour</string>
     <string name="please_you_must_enter_name_of_alarm_and_interval_time">Please you must enter name of alarm and interval time 😢</string>
+    <string name="without_name_j">Without Name j</string>
 </resources>

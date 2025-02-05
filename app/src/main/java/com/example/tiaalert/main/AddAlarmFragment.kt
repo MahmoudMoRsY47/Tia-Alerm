@@ -58,35 +58,39 @@ class AddAlarmFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                val alarmId = UUID.randomUUID().toString()
+                val alarmId = UUID.randomUUID().hashCode()
                 val hour = binding.timePicker.hour
                 val minute = binding.timePicker.minute
                 val interval = binding.etInterval.text.toString().toInt()
                 val name =
                     binding.etName.text.toString().ifEmpty { getString(R.string.without_name) }
-
                 val alarm = AlarmsModel(alarmId, hour, minute, interval, name)
+
                 alarmManagerHelper.saveAlarm(alarm)
 
-                scheduleAlarm(alarm.hour, alarm.minute, alarm.intervalHours, alarm.name)
-
+                scheduleAlarm(alarm.hour, alarm.minute, alarm.intervalHours, alarm.name, alarmId)
                 findNavController().popBackStack()
             }
         }
     }
-
     @SuppressLint("ScheduleExactAlarm")
-    private fun scheduleAlarm(hour: Int, minute: Int, intervalHours: Int, alarmName: String) {
+    private fun scheduleAlarm(
+        hour: Int,
+        minute: Int,
+        intervalHours: Int,
+        alarmName: String,
+        alarmId: Int
+    ) {
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(requireContext(), AlarmReceiver::class.java).apply {
             putExtra("interval", intervalHours * 60 * 60 * 1000L) // Ensure correct interval
             putExtra("alarmName", alarmName) // Pass the alarm name
+            putExtra("alarmId", alarmId) // Pass alarm ID
         }
 
-        val requestCode = System.currentTimeMillis().toInt() // Unique request code for each alarm
         val pendingIntent = PendingIntent.getBroadcast(
             requireContext(),
-            requestCode, // Unique for each alarm
+            alarmId, // Unique for each alarm
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
@@ -95,16 +99,18 @@ class AddAlarmFragment : Fragment() {
             set(Calendar.HOUR_OF_DAY, hour)
             set(Calendar.MINUTE, minute)
             set(Calendar.SECOND, 0)
-            if (timeInMillis < System.currentTimeMillis()) add(
-                Calendar.DAY_OF_MONTH,
-                1
-            ) // Ensure future alarm
+//            if (timeInMillis + intervalHours * 60 * 60 * 1000 <= System.currentTimeMillis()) {
+//                add(
+//                    Calendar.HOUR_OF_DAY,
+//                    intervalHours
+//                ) // Add interval if the time has already passed
+//            }
         }
 
-        // Set the alarm
+        // Set the alarm to repeat at the specified interval
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
+            calendar.timeInMillis + intervalHours * 60 * 60 * 1000L, // Interval in milliseconds
             pendingIntent
         )
 
@@ -119,5 +125,4 @@ class AddAlarmFragment : Fragment() {
             Toast.LENGTH_SHORT
         ).show()
     }
-
 }
