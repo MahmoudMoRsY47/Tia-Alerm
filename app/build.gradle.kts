@@ -60,5 +60,6 @@ dependencies {
     implementation (libs.androidx.navigation.fragment.ktx)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation(libs.androidx.work.runtime.ktx)
+    implementation("com.airbnb.android:lottie:3.4.0")
 
 }

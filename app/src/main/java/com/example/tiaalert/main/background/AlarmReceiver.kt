@@ -8,13 +8,14 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.media.Ringtone
-import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import com.example.tiaalert.MainActivity
+import com.example.tiaalert.AlarmDetailsActivity
 import com.example.tiaalert.R
+import com.example.tiaalert.main.AlarmRing
+import com.example.tiaalert.main.model.AlarmsModel
+import com.example.tiaalert.main.utils.fromJson
+import com.example.tiaalert.main.utils.toJson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -22,42 +23,41 @@ import kotlinx.coroutines.launch
 
 class AlarmReceiver : BroadcastReceiver() {
 
-    private var ringtone: Ringtone? = null
 
     @SuppressLint("ScheduleExactAlarm")
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.let {
-            val intervalMillis = intent?.getLongExtra("interval", 0L)
-            val alarmName = intent?.getStringExtra("alarmName")
-            val alarmId = intent?.getIntExtra("alarmId", 0)
+            val alarm = intent?.getStringExtra("alarm")
+            val alarmAfter = alarm?.fromJson<AlarmsModel>()
+//            val intervalMillis = intent?.getLongExtra("interval", 0L)
+//            val alarmName = intent?.getStringExtra("alarmName")
+//            val alarmId = intent?.getIntExtra("alarmId", 0)
 
             // Trigger the alarm (e.g., show a notification or play a sound)
-            if (intervalMillis != null && intervalMillis > 0) {
+            if (alarmAfter?.intervalHours != null && alarmAfter.intervalHours > 0) {
                 // Schedule the next alarm if needed
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 val nextIntent = Intent(context, AlarmReceiver::class.java).apply {
-                    putExtra("interval", intervalMillis)
-                    putExtra("alarmName", alarmName)
-                    putExtra("alarmId", alarmId)
+                    putExtra("alarm", alarm)
+
                 }
                 val pendingIntent = PendingIntent.getBroadcast(
                     context,
-                    alarmId!!,
+                    alarmAfter.id,
                     nextIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
 
-                val nextTriggerTime = System.currentTimeMillis() + intervalMillis
+                val nextTriggerTime =
+                    System.currentTimeMillis() + alarmAfter.intervalHours * 60 * 60 * 1000L
                 alarmManager.setExactAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP, nextTriggerTime, pendingIntent
                 )
             }
-            val alarmUri = Uri.parse("android.resource://${context.packageName}/${R.raw.child}")
-            ringtone = RingtoneManager.getRingtone(context, alarmUri)
-            ringtone?.play()
+            AlarmRing.play(context)
 
             // Send Alarm Notification
-            sendNotification(it, alarmName ?: context.getString(R.string.without_name))
+            sendNotification(it, alarmAfter)
 
             // Stop the alarm after 10 minutes using a coroutine
             CoroutineScope(Dispatchers.Main).launch {
@@ -69,17 +69,19 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     private fun stopAlarm() {
-        ringtone?.stop()
+        AlarmRing.stop()
     }
 
-    private fun sendNotification(context: Context, alarmName: String) {
+    private fun sendNotification(context: Context, alarm: AlarmsModel?) {
         val channelId = "alarm_channel"
         val notificationManager = context.getSystemService(NotificationManager::class.java)
 
-        // Create Intent to Open MainActivity
-        val intent = Intent(context, MainActivity::class.java).apply {
+        // **إنشاء Intent لفتح `AlarmDetailsActivity` وتمرير بيانات التنبيه**
+        val intent = Intent(context, AlarmDetailsActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra("alarm", alarm.toJson()) // تمرير بيانات التنبيه
         }
+
         val pendingIntent = PendingIntent.getActivity(
             context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
@@ -93,8 +95,8 @@ class AlarmReceiver : BroadcastReceiver() {
 
         // Build the notification
         val notification = NotificationCompat.Builder(context, channelId)
-            .setContentTitle(context.getString(R.string.alarm, alarmName))
-            .setContentText(context.getString(R.string.time_s_up, alarmName))
+            .setContentTitle(context.getString(R.string.alarm, alarm?.name))
+            .setContentText(context.getString(R.string.time_s_up, alarm?.name))
             .setSmallIcon(R.drawable.tia1).setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent).setAutoCancel(true).build()
 

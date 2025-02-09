@@ -33,6 +33,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".AlarmDetailsActivity" />
 
         <receiver
             android:name=".main.background.AlarmReceiver"

@@ -16,5 +16,5 @@
     <string name="language">English</string>
     <string name="alarm_set_for_repeating_every_hour">تم ضبط المنبة علي الساعة %1$s:%2$s ويتكرر كل %3$s ساعة</string>
     <string name="please_you_must_enter_name_of_alarm_and_interval_time">معلش لازم تدخلي اسم المنبة وهيتكرر بعد كل اد اي 😢</string>
-    <string name="without_name_j">Without Name j</string>
+    <string name="stop_alarm">ايقاف المنبة</string>
 </resources>

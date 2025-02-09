@@ -17,6 +17,7 @@ import com.example.tiaalert.databinding.FragmentAddAlarmBinding
 import com.example.tiaalert.main.background.AlarmManagerHelper
 import com.example.tiaalert.main.background.AlarmReceiver
 import com.example.tiaalert.main.model.AlarmsModel
+import com.example.tiaalert.main.utils.toJson
 import com.example.tiaalert.main.utils.toVisible
 import java.util.Calendar
 import java.util.UUID
@@ -68,36 +69,32 @@ class AddAlarmFragment : Fragment() {
 
                 alarmManagerHelper.saveAlarm(alarm)
 
-                scheduleAlarm(alarm.hour, alarm.minute, alarm.intervalHours, alarm.name, alarmId)
+                scheduleAlarm(alarm)
                 findNavController().popBackStack()
             }
         }
     }
     @SuppressLint("ScheduleExactAlarm")
     private fun scheduleAlarm(
-        hour: Int,
-        minute: Int,
-        intervalHours: Int,
-        alarmName: String,
-        alarmId: Int
+        alarm: AlarmsModel,
     ) {
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(requireContext(), AlarmReceiver::class.java).apply {
-            putExtra("interval", intervalHours * 60 * 60 * 1000L) // Ensure correct interval
-            putExtra("alarmName", alarmName) // Pass the alarm name
-            putExtra("alarmId", alarmId) // Pass alarm ID
+            putExtra("alarm", alarm.toJson()) // Ensure correct interval
+//            putExtra("alarmName", alarm.name) // Pass the alarm name
+//            putExtra("alarmId", alarm.id) // Pass alarm ID
         }
 
         val pendingIntent = PendingIntent.getBroadcast(
             requireContext(),
-            alarmId, // Unique for each alarm
+            alarm.id, // Unique for each alarm
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         val calendar = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, hour)
-            set(Calendar.MINUTE, minute)
+            set(Calendar.HOUR_OF_DAY, alarm.hour)
+            set(Calendar.MINUTE, alarm.minute)
             set(Calendar.SECOND, 0)
 //            if (timeInMillis + intervalHours * 60 * 60 * 1000 <= System.currentTimeMillis()) {
 //                add(
@@ -110,7 +107,7 @@ class AddAlarmFragment : Fragment() {
         // Set the alarm to repeat at the specified interval
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis + intervalHours * 60 * 60 * 1000L, // Interval in milliseconds
+            calendar.timeInMillis + alarm.intervalHours * 60 * 60 * 1000L, // Interval in milliseconds
             pendingIntent
         )
 
@@ -118,9 +115,9 @@ class AddAlarmFragment : Fragment() {
             requireContext(),
             getString(
                 R.string.alarm_set_for_repeating_every_hour,
-                hour.toString(),
-                minute.toString(),
-                intervalHours.toString()
+                alarm.hour.toString(),
+                alarm.minute.toString(),
+                alarm.intervalHours.toString()
             ),
             Toast.LENGTH_SHORT
         ).show()
