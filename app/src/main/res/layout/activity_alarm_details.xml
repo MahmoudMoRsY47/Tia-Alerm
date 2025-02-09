@@ -1,17 +1,19 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motionLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:background="@color/colorWhite"
+    app:layoutDescription="@xml/motion_scene"
+    tools:context=".AlarmDetailsActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_empty"
         android:layout_width="270dp"
         android:layout_height="270dp"
+        android:layout_marginTop="120dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,18 +28,33 @@
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/iv_empty"
+        app:layout_constraintStart_toStartOf="@+id/iv_empty"
+        app:layout_constraintTop_toBottomOf="@+id/iv_empty"
         tools:text="@string/tia_mahmoud_morsy" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/alarm_lotti"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_alarm_name"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/alarm" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/stopAlarmButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="@string/stop_alarm"
-        app:cornerRadius="8dp" />
-</LinearLayout>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/arrow_lotti"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_alarm_name"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/arrow_down" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>
